@@ -40,7 +40,7 @@ _x_ = Actor.importLib( 'utils/hcp_helpers', '_x_' )
 
 class OobExec ( StatelessActor ):
     def init( self, parameters, resources ):
-        super( WinOobExec, self ).init( parameters, resources )
+        super( OobExec, self ).init( parameters, resources )
         self.dotNet = re.compile( r'.*\\Microsoft.NET\\.*' )
 
     def process( self, detects, msg ):

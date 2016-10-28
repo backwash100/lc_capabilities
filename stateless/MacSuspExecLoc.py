@@ -36,7 +36,7 @@ LC_DETECTION_MTD_END
 from beach.actor import Actor
 import re
 ObjectTypes = Actor.importLib( 'utils/ObjectsDb', 'ObjectTypes' )
-StatelessActor = Actor.importLib( Detects', 'StatelessActor' )
+StatelessActor = Actor.importLib( 'Detects', 'StatelessActor' )
 _xm_ = Actor.importLib( 'utils/hcp_helpers', '_xm_' )
 
 class MacSuspExecLoc ( StatelessActor ):
