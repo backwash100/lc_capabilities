@@ -50,3 +50,31 @@ Patrol( 'MacReconTools',
             'secretIdent' : 'analysis/038528f5-5135-4ca8-b79f-d6b8ffc53bf5',
             'trustedIdents' : [ 'analysis/038528f5-5135-4ca8-b79f-d6b8ffc53bf5' ],
             'n_concurrent' : 5 } )
+
+#######################################
+# stateless/VirusTotalKnownBad
+# This actor checks all hashes against
+# VirusTotal and reports hashes that
+# have more than a threshold of AV
+# reports, while caching results.
+# Parameters:
+# min_av: minimum number of AV reporting
+#    a result on the hash before it is
+#    reported as a detection.
+#######################################
+Patrol( 'VirusTotalKnownBad',
+        initialInstances = 1,
+        maxInstances = None,
+        relaunchOnFailure = True,
+        onFailureCall = None,
+        scalingFactor = 2000,
+        actorArgs = ( 'stateless/VirusTotalKnownBad',
+                      [ 'analytics/stateless/common/notification.CODE_IDENTITY/virustotalknownbad/1.0',
+                        'analytics/stateless/common/notification.OS_SERVICES_REP/virustotalknownbad/1.0',
+                        'analytics/stateless/common/notification.OS_DRIVERS_REP/virustotalknownbad/1.0',
+                        'analytics/stateless/common/notification.OS_AUTORUNS_REP/virustotalknownbad/1.0' ] ),
+        actorKwArgs = {
+            'parameters' : { 'qpm' : 1 },
+            'secretIdent' : 'analysis/038528f5-5135-4ca8-b79f-d6b8ffc53bf5',
+            'trustedIdents' : [ 'analysis/038528f5-5135-4ca8-b79f-d6b8ffc53bf5' ],
+            'n_concurrent' : 2 } )
