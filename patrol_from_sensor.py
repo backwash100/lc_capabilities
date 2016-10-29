@@ -3,7 +3,7 @@
 '''
 LC_PATROL_MTD_START
 {
-    "description" : "Collection of all core LimaCharlie detections and hunters.",
+    "description" : "Collection of all sensor LimaCharlie detections and hunters.",
     "author" : "maximelb@google.com",
     "version" : "1.0"
 }
