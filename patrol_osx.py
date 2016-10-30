@@ -3,7 +3,7 @@
 '''
 LC_PATROL_MTD_START
 {
-    "description" : "Collection of all OSX LimaCharlie detections and hunters.",
+    "description" : "Collection of all OSX LimaCharlie detections.",
     "author" : "maximelb@google.com",
     "version" : "1.0"
 }
