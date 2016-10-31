@@ -120,6 +120,14 @@ class BadExecLocHunter ( Hunter ):
                        ( 'os_suspend', '-p', pid ),
                        isNeedResp = False )
 
+        # Let's report on all files this has touched.
+        childEvents = self.getChildrenAtoms( originAtom, depth = 100 )
+        if childEvents is not None:
+            investigation.reportData( 'Found the following files impacted'
+                self.listToMdTable( [ 'File Path', 'Operation' ], 
+                                                          [ ( _x_( x, '?/base.FILE_PATH' ), x.keys()[ 0 ] ) for x in childEvents 
+                                                            if x.keys()[ 0 ].startswith( 'notification.FILE_' ) ] ) )
+
         investigation.conclude( "Finished investigating",
                                 InvestigationNature.OPEN,
                                 InvestigationConclusion.REQUIRES_HUMAN )
