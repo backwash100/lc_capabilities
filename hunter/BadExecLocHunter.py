@@ -65,12 +65,12 @@ class BadExecLocHunter ( Hunter ):
                                        ( 'history_dump', ) )
 
         # Get the path of the executable.
-        suspExec = _x_( event, '?/base.FILE_PATH' )
+        suspExec = _x_( data, '?/base.FILE_PATH' )
 
         # If this is a duplicate investigation abort.
         duplicateInv = investigation.isDuplicate( suspExec, 60 * 60 * 24 )
         if duplicateInv is not False:
-            investigation.conclude( 'this is a [duplicate investigation](/event?id=%s)' % duplicateInv,
+            investigation.conclude( 'this is a [duplicate investigation](/detect?id=%s)' % duplicateInv,
                                     InvestigationNature.DUPLICATE,
                                     InvestigationConclusion.NO_ACTION_TAKEN )
             return
@@ -123,10 +123,10 @@ class BadExecLocHunter ( Hunter ):
         # Let's report on all files this has touched.
         childEvents = self.getChildrenAtoms( originAtom, depth = 100 )
         if childEvents is not None:
-            investigation.reportData( 'Found the following files impacted'
+            investigation.reportData( 'Found the following files impacted\n' +
                 self.listToMdTable( [ 'File Path', 'Operation' ], 
-                                                          [ ( _x_( x, '?/base.FILE_PATH' ), x.keys()[ 0 ] ) for x in childEvents 
-                                                            if x.keys()[ 0 ].startswith( 'notification.FILE_' ) ] ) )
+                                    [ ( _x_( x, '?/base.FILE_PATH' ), x.keys()[ 0 ] ) for x in childEvents 
+                                      if x.keys()[ 0 ].startswith( 'notification.FILE_' ) ] ) )
 
         investigation.conclude( "Finished investigating",
                                 InvestigationNature.OPEN,
