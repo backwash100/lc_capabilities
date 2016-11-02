@@ -81,7 +81,7 @@ class BadExecLocHunter ( Hunter ):
         if 'notification.NEW_PROCESS' == detect:
             rootEvent = detect
         else:
-            for rootEvent in self.crawlUpParentTree( None, rootAtom = parentAtom )
+            for rootEvent in self.crawlUpParentTree( None, rootAtom = parentAtom ):
                 originAtom = normalAtom( _x_( rootEvent, '?/hbs.THIS_ATOM' ) )
                 pid = _x_( rootEvent, '?/base.PROCESS_ID' )
                 break
