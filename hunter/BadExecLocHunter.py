@@ -91,6 +91,7 @@ class BadExecLocHunter ( Hunter ):
 
         # Wait for history dump to come in.
         histResp.wait( 10 )
+        self.sleep( 5 )
 
         # Let's see if we can find whoever wrote the file there.
         writerAtom = None
