@@ -18,7 +18,7 @@
 LC_DETECTION_MTD_START
 {
     "type" : "stateful",
-    "description" : "Detects a chain of executions resembling a document exploit.",
+    "description" : "Detects a suspicious payload executed from within a scripting engine.",
     "requirements" : "",
     "feeds" : [],
     "platform" : "windows",
@@ -37,18 +37,18 @@ import re
 ProcessDescendant = Actor.importLib( 'analytics/StateAnalysis/descriptors', 'ProcessDescendant' )
 StatefulActor = Actor.importLib( 'Detects', 'StatefulActor' )
 
-class WinDocumentExploit ( StatefulActor ):
+class WinScriptedPayload ( StatefulActor ):
     def initMachines( self, parameters ):
         self.shardingKey = 'agentid'
 
-        productivityApps = re.compile( r'.*(/|\\)((chrome)|(firefox)|(iexplore)|(winword)|(outlook)|(acrord32))\.exe', re.IGNORECASE )
-        sensitiveApps = re.compile( r'.*(/|\\)((cmd)|(nslookup)|(ipconfig)|(wmic)|(whoami)|(systeminfo)|(powershell))\.exe', re.IGNORECASE )
+        scriptEngines = re.compile( r'.*(/|\\)((wscript))\.exe', re.IGNORECASE )
+        sensitiveApps = re.compile( r'.*(/|\\)((((cmd)|(nslookup)|(ipconfig)|(wmic)|(whoami)|(systeminfo))\.exe)|((?<!\.exe)$))', re.IGNORECASE )
         
-        productivityDocExploit = ProcessDescendant( name = 'windows_productivity_doc_exploit',
-                                                    priority = 90,
-                                                    summary = 'A productivity app is starting suspicious processes',
-                                                    parentRegExp = productivityApps,
-                                                    childRegExp = sensitiveApps,
-                                                    isDirectOnly = False )
+        scriptedPayload = ProcessDescendant( name = 'windows_scripted_payload',
+                                             priority = 70,
+                                             summary = 'A script engine has ',
+                                             parentRegExp = scriptEngines,
+                                             childRegExp = sensitiveApps,
+                                             isDirectOnly = False )
 
-        self.addStateMachineDescriptor( productivityDocExploit )
+        self.addStateMachineDescriptor( scriptedPayload )

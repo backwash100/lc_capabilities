@@ -33,6 +33,7 @@ LC_DETECTION_MTD_END
 ###############################################################################
 
 from beach.actor import Actor
+import re
 ProcessBurst = Actor.importLib( 'analytics/StateAnalysis/descriptors', 'ProcessBurst' )
 StatefulActor = Actor.importLib( 'Detects', 'StatefulActor' )
 
@@ -43,7 +44,7 @@ class WinReconTools ( StatefulActor ):
         reconBurst = ProcessBurst( name = 'windows_recon_burst', 
         						   priority = 1,
         						   summary = 'Burst of recon activity',
-        						   procRegExp = r'.*(/|\\)((ipconfig)|(arp)|(route)|(ping)|(traceroute)|(nslookup)|(netstat)|(wmic)|(net\d?)|(whoami)|(systeminfo))\.exe',
+        						   procRegExp = re.compile( r'.*(/|\\)((ipconfig)|(arp)|(route)|(ping)|(vssadmin)|(traceroute)|(nslookup)|(netstat)|(wmic)|(net\d?)|(whoami)|(systeminfo))\.exe', re.IGNORECASE),
         						   nPerBurst = 3,
         						   withinMilliSeconds = 5 * 1000 )
         

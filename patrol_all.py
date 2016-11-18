@@ -92,6 +92,25 @@ Patrol( 'WinReconTools',
             'n_concurrent' : 5 } )
 
 #######################################
+# stateful/WinScriptedPayload
+# This actor looks for a payload executing
+# under a scripting engine.
+#######################################
+Patrol( 'WinScriptedPayload',
+        initialInstances = 2,
+        maxInstances = None,
+        relaunchOnFailure = True,
+        onFailureCall = None,
+        scalingFactor = 500,
+        actorArgs = ( 'stateful/WinScriptedPayload',
+                      'analytics/stateful/modules/windows/scriptedpayload/1.0' ),
+        actorKwArgs = {
+            'parameters' : {},
+            'secretIdent' : 'analysis/038528f5-5135-4ca8-b79f-d6b8ffc53bf5',
+            'trustedIdents' : [ 'analysis/038528f5-5135-4ca8-b79f-d6b8ffc53bf5' ],
+            'n_concurrent' : 5 } )
+
+#######################################
 # stateful/MacReconTools
 # This actor looks for burst in usage
 # of common recon tools used early
@@ -179,6 +198,25 @@ Patrol( 'WinSuspExecName',
         actorArgs = ( 'stateless/WinSuspExecName',
                       [ 'analytics/stateless/windows/notification.NEW_PROCESS/suspexecname/1.0',
                         'analytics/stateless/windows/notification.CODE_IDENTITY/suspexecname/1.0' ] ),
+        actorKwArgs = {
+            'parameters' : {},
+            'secretIdent' : 'analysis/038528f5-5135-4ca8-b79f-d6b8ffc53bf5',
+            'trustedIdents' : [ 'analysis/038528f5-5135-4ca8-b79f-d6b8ffc53bf5' ],
+            'n_concurrent' : 5 } )
+
+#######################################
+# stateless/ShadowVolumeTampering
+# This actor looks for execution changing
+# the Windows shadow volumes.
+#######################################
+Patrol( 'ShadowVolumeTampering',
+        initialInstances = 1,
+        maxInstances = None,
+        relaunchOnFailure = True,
+        onFailureCall = None,
+        scalingFactor = 1000,
+        actorArgs = ( 'stateless/ShadowVolumeTampering',
+                      [ 'analytics/stateless/windows/notification.NEW_PROCESS/shadowvolumetampering/1.0' ] ),
         actorKwArgs = {
             'parameters' : {},
             'secretIdent' : 'analysis/038528f5-5135-4ca8-b79f-d6b8ffc53bf5',
