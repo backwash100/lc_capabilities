@@ -49,7 +49,7 @@ class VirusTotalKnownBad ( StatelessActor ):
         self.vtReport = self.getActorHandle( 'analytics/virustotal' )
 
         # Minimum number of AVs saying it's a hit before we flag it
-        self.threshold = parameters.get( 'min_av', 5 )
+        self.threshold = parameters.get( 'min_av', 1 )
 
     def process( self, detects, msg ):
         routing, event, mtd = msg.data
